@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bstree.h"
+#include "register.h"
 
 struct bstree *create_dictionary(FILE *dictionary);
 

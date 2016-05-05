@@ -13,12 +13,18 @@ struct bstree *create_dictionary(FILE *dictionary)
     if (!feof(dictionary)) {
 	    fscanf(dictionary, "%s\n",buf_key);
 	    fscanf(dictionary, "%s\n",buf_value);
+	    //buf_key = toLowCase(buf_key);
+	    //printf("buf_key %s\n", buf_key);
+	    //buf_value = toLowCase(buf_value);
 	    tree = bstree_create(buf_key,buf_value);
     }
 
     while (!feof(dictionary)) {
 	    fscanf(dictionary, "%s\n",buf_key);
 	    fscanf(dictionary, "%s\n",buf_value);
+	    //buf_key = toLowCase(buf_key);
+	    //printf("buf_key %s\n", buf_key);
+	    //buf_value = toLowCase(buf_value);
 	    bstree_add(tree,buf_key,buf_value);
     }
     free(buf_key);

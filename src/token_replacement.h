@@ -5,8 +5,6 @@
 #include <string.h>
 #include <stdio.h>
 
-void right(char *str, int idx, int len);
-void left(char *str, int idx, int len);
-void replacement(char *str, int idx, struct bstree *node);
+int replacement(char *str, int idx, struct bstree *node, int reg);
 
 #endif

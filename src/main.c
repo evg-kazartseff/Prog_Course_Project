@@ -5,6 +5,7 @@
 #include "bstree.h"
 #include "dictionary.h"
 #include "token_replacement.h"
+#include "register.h"
 
 #define translate_const 256
 
@@ -33,7 +34,7 @@ int main (int argc, char **argv)
     while ((key = getopt(argc, argv, "hvi:o:d:")) != -1) {
 	switch (key) {
 	    case 'h':
-		printf("Basic usage: \"translate -i input_file -d dictionary -o output_file\"\n");
+		printf("Basic usage: \"./translate -i input_file -d dictionary -o output_file\"\n");
 		break;
 	    case 'v':
 		printf("Version 0.0\n");
@@ -54,7 +55,7 @@ int main (int argc, char **argv)
 		strncpy(t_file->input, optarg, len-1);
 		break;
 	    default: /* '?' */
-		printf ("look trenslate -h\n");
+		printf ("look \"./trenslate -h\"\n");
 	}
     }
     
@@ -108,7 +109,7 @@ int main (int argc, char **argv)
 	return EXIT_FAILURE;
     }
 
-    printf("%s\n",buf);
+    //printf("%s\n",buf);
 
     char *buf_tr = malloc(strlen(buf) * sizeof(char) + translate_const);
     strcpy(buf_tr, buf);
@@ -119,21 +120,22 @@ int main (int argc, char **argv)
     token = strtok(buf, delim);
     
     struct bstree *node;
+    int offset = 0;
     while (token != NULL) {
 	//printf("token \"%s\"\n",token);
 	node = bstree_lookup(tree, token);
 	if (node != NULL) {
 	    //printf("lookup %s %s\n",node->key, node->value);
 	    int idx = (int)(token - buf);
-	    //printf("idx %d\n", idx);
-	    replacement(buf_tr, idx, node);
+	    //printf("idx %s\n", &buf[idx]);
+	    offset = offset + replacement(buf_tr, idx + offset, node, 1);
 	}
-	else
-	    printf("word: \"%s\" not found!\n", token);
+	/*else
+	    printf("word: \"%s\" not found!\n", token);*/
 	token = strtok(NULL ,delim);
     }
-    
-    printf("%s\n",buf_tr);
+    fprintf(output, "%s",buf_tr);
+    //printf("%s\n",buf_tr);
     
     return EXIT_SUCCESS;
 }
