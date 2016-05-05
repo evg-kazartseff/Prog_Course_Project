@@ -4,6 +4,9 @@
 #include <unistd.h> // getopt
 #include "bstree.h"
 #include "dictionary.h"
+#include "token_replacement.h"
+
+#define translate_const 256
 
 struct Data {
     char *input;
@@ -75,24 +78,8 @@ int main (int argc, char **argv)
 	    return EXIT_FAILURE;
     }
     
-    FILE *dictionary;
-    dictionary = fopen(t_file->dictionary, "r");
-    if (dictionary == NULL) {
-	    printf ("Can't open dictionary file!!\n");
-	    return EXIT_FAILURE;
-    }
-    struct bstree *tree;
-    tree = create_dictionary(dictionary);
-    
-    FILE *output;
-    output = fopen(t_file->output, "w");
-    if (output == NULL) {
-	printf ("Can't create output file!!\n");
-	return EXIT_FAILURE;
-    }
-
     unsigned int N = 256, i = 0;   
-    char* buf = (char*) malloc(sizeof(char)*N);    
+    char* buf = (char*) malloc(sizeof(char)*N); //заменить на логарифмическую функцию  
     while ((buf [i] = fgetc(input)) != EOF)  {                
         if (++i >= N) {
             N = N * 2;
@@ -101,14 +88,52 @@ int main (int argc, char **argv)
     }
     buf[i] = '\0';
     fclose(input);
-    printf("%s",buf);
+
+
+    FILE *dictionary;
+    dictionary = fopen(t_file->dictionary, "r");
+    if (dictionary == NULL) {
+	    printf ("Can't open dictionary file!!\n");
+	    return EXIT_FAILURE;
+    }
+    struct bstree *tree;
+    tree = create_dictionary(dictionary);
+    fclose(dictionary);
 
     
+    FILE *output;
+    output = fopen(t_file->output, "w");
+    if (output == NULL) {
+	printf ("Can't create output file!!\n");
+	return EXIT_FAILURE;
+    }
+
+    printf("%s\n",buf);
+
+    char *buf_tr = malloc(strlen(buf) * sizeof(char) + translate_const);
+    strcpy(buf_tr, buf);
+    
+    char *delim = ",.?! \t\n;:-";
+    
+    char *token = NULL;
+    token = strtok(buf, delim);
     
     struct bstree *node;
-    node = bstree_lookup(tree,"/*str*/");
-
-    printf("lookup %s %s\n",node->key, node->value);
+    while (token != NULL) {
+	//printf("token \"%s\"\n",token);
+	node = bstree_lookup(tree, token);
+	if (node != NULL) {
+	    //printf("lookup %s %s\n",node->key, node->value);
+	    int idx = (int)(token - buf);
+	    //printf("idx %d\n", idx);
+	    replacement(buf_tr, idx, node);
+	}
+	else
+	    printf("word: \"%s\" not found!\n", token);
+	token = strtok(NULL ,delim);
+    }
+    
+    printf("%s\n",buf_tr);
     
     return EXIT_SUCCESS;
 }
