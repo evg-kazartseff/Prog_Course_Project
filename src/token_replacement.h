@@ -4,6 +4,7 @@
 #include "bstree.h"
 #include <string.h>
 #include <stdio.h>
+#include "register.h"
 
 int replacement(char *str, int idx, struct bstree *node, int reg);
 

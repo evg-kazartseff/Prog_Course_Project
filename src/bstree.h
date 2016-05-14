@@ -5,16 +5,14 @@
 #include <string.h>
 
 struct bstree {
-	char *key; /* Ключ */
-	char *value; /* Данные */
-	struct bstree *left;
-	struct bstree *right;
+    char *key;                  /* Ключ */
+    char *value;                /* Данные */
+    struct bstree *left;
+    struct bstree *right;
 };
 
 struct bstree *bstree_create(char *key, char *value);
 void bstree_add(struct bstree *tree, char *key, char *value);
 struct bstree *bstree_lookup(struct bstree *tree, char *key);
-struct bstree *bstree_min(struct bstree *tree);
-struct bstree *bstree_max(struct bstree *tree);
 
 #endif

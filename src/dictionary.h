@@ -8,6 +8,6 @@
 #include "bstree.h"
 #include "register.h"
 
-struct bstree *create_dictionary(FILE *dictionary);
+struct bstree *create_dictionary(FILE * dictionary);
 
 #endif
