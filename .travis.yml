@@ -1,10 +1,4 @@
 language: c
 
-script: mkdir build
-script: ls
-script: cd ./build
-script: cmake ../
-script: ls
+script: cmake ./
 script: make
-script: ls
-script: cd ./bin
