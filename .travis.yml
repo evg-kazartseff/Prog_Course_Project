@@ -9,4 +9,3 @@ script: make
 script: ls
 script: cd ./bin
 script: ls
-script: ./translateTest
