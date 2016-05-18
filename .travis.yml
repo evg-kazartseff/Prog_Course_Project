@@ -1,5 +1,6 @@
 language: c
 
+sudo: required
 dist: trusty
 
 addons:
@@ -17,6 +18,7 @@ addons:
       - cmake-data
 
 script: 
+   - "cmake --version"
    - mkdir build
    - cd ./build
    - cmake ../
