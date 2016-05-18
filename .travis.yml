@@ -1,3 +1,8 @@
 language: c
 
-script: ls
+script: mkdir build
+script: cd ./build
+script: cmake ../
+script: make
+script: cd ./bin
+script: ./translateTest
