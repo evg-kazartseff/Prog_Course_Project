@@ -9,6 +9,12 @@ addons:
    packages:
    - gcc-4.8
    - g++-4.8
+ apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
 
 script: 
    - mkdir build
