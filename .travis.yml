@@ -1,0 +1,5 @@
+language: c
+
+script: build/cmake
+script:	build/make
+script: bin/translateTest
