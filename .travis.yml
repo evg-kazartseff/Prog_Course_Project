@@ -18,6 +18,7 @@ addons:
       - cmake-data
 
 script: 
+   - ls
    - "cmake --version"
    - mkdir build
    - cd ./build
