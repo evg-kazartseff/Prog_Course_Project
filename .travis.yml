@@ -8,4 +8,3 @@ script: ls
 script: make
 script: ls
 script: cd ./bin
-script: ls
