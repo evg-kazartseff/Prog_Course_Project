@@ -9,7 +9,7 @@ int replacement(char *str, int idx, struct bstree *node, int reg)
     int delta = size_word_in - size_word_del;
     if (delta > 0) {
         memmove(&str[idx + size_word_del + delta], &str[idx + size_word_del],
-                strlen(&str[idx + size_word_del * 2]));
+                strlen(&str[idx + size_word_del * 2 - 2]));
         strncpy(&str[idx], value, size_word_in);
     } else if (delta < 0) {
         memmove(&str[idx + size_word_del + delta], &str[idx + size_word_del],
