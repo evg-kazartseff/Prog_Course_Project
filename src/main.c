@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <string.h>
 #include "parsing.h"
 #include "bstree.h"
@@ -32,17 +33,20 @@ int main(int argc, char **argv)
     }
 
     unsigned int N = 256, i = 0;
-    char *buf = (char *) malloc(sizeof(char) * N);      //заменить на логарифмическую функцию  
+    char *buf = (char *) malloc(sizeof(char) * N); 
     while ((buf[i] = fgetc(input)) != EOF) {
         if (++i >= N) {
-            N = N * 2;
-            buf = (char *) realloc(buf, sizeof(char) * N);
+	    if (N < 1024) {
+		N = N * 2;
+		buf = (char *) realloc(buf, sizeof(char) * N); }
+            }
+       	    else {
+		N = N + (int)sqrt(N); //для экономии памяти
+		buf = (char *) realloc(buf, sizeof(char) * N);
+	    }
         }
-    }
     buf[i] = '\0';
     fclose(input);
-
-
     FILE *dictionary;
     dictionary = fopen(t_file->dictionary, "r");
     if (dictionary == NULL) {
