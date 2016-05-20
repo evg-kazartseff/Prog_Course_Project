@@ -96,5 +96,7 @@ int main(int argc, char **argv)
     if (flg->print == 1)
         printf("\n%s\n", buf_tr);
 
+    free(buf);
+    free(buf_tr);
     return EXIT_SUCCESS;
 }
