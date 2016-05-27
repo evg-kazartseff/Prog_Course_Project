@@ -20,5 +20,6 @@ struct FLG {
 };
 
 struct FLG *parsing(int argc, char **argv, struct Data *t_file);
+int check_path(char *str);
 
 #endif

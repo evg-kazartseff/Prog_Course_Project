@@ -40,18 +40,30 @@ struct FLG *parsing(int argc, char **argv, struct Data *t_file)
                 break;
             case 'd':
                 flg->file = 1;
+                if (check_path(optarg) == 1) {
+                    flg->arg = 1;
+                    printf("Incorrect file name: %s\n", optarg);
+                }
                 len = strlen(optarg) + 1;
                 t_file->dictionary = malloc(sizeof(char) * len);
                 strncpy(t_file->dictionary, optarg, len - 1);
                 break;
             case 'o':
                 flg->file = 1;
+                if (check_path(optarg) == 1) {
+                    flg->arg = 1;
+                    printf("Incorrect file name: %s\n", optarg);
+                }
                 len = strlen(optarg) + 1;
                 t_file->output = malloc(sizeof(char) * len);
                 strncpy(t_file->output, optarg, len - 1);
                 break;
             case 'i':
                 flg->file = 1;
+                if (check_path(optarg) == 1) {
+                    flg->arg = 1;
+                    printf("Incorrect file name: %s\n", optarg);
+                }
                 len = strlen(optarg) + 1;
                 t_file->input = malloc(sizeof(char) * len);
                 strncpy(t_file->input, optarg, len - 1);
@@ -77,5 +89,18 @@ struct FLG *parsing(int argc, char **argv, struct Data *t_file)
     } else if (flg->info == 1) {
         flg->file = 0;
     }
+    return flg;
+}
+
+int check_path(char *str)
+{
+    int flg = 0;
+    char *pl = strrchr(str, '.');
+    if (pl == NULL) {
+        printf("pl %s\n", pl);
+        flg = 1;
+    }
+    else if ((long int)(pl[1]) == (long int)'/')
+        flg = 1;
     return flg;
 }

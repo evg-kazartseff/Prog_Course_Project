@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     struct FLG *flg;
     flg = parsing(argc, argv, t_file);
 
-    if (flg->arg == 1)
+    if (flg->arg > 0)
         return EXIT_FAILURE;
     if (flg->info == 1 && flg->file == 0)
         return EXIT_SUCCESS;
@@ -33,18 +33,19 @@ int main(int argc, char **argv)
     }
 
     unsigned int N = 256, i = 0;
-    char *buf = (char *) malloc(sizeof(char) * N); 
+    char *buf = (char *) malloc(sizeof(char) * N);
     while ((buf[i] = fgetc(input)) != EOF) {
         if (++i >= N) {
 	    if (N < 1024) {
 		N = N * 2;
-		buf = (char *) realloc(buf, sizeof(char) * N); }
+		buf = (char *) realloc(buf, sizeof(char) * N);
             }
        	    else {
 		N = N + (int)sqrt(N); //для экономии памяти
 		buf = (char *) realloc(buf, sizeof(char) * N);
 	    }
-        }
+         }
+    }
     buf[i] = '\0';
     fclose(input);
     FILE *dictionary;
@@ -94,7 +95,7 @@ int main(int argc, char **argv)
     fprintf(output, "%s", buf_tr);
     fclose(output);
     if (flg->print == 1)
-        printf("\n%s\n", buf_tr);
+        printf("%s\n", buf_tr);
 
     free(buf);
     free(buf_tr);
