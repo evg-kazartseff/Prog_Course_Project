@@ -95,12 +95,14 @@ struct FLG *parsing(int argc, char **argv, struct Data *t_file)
 int check_path(char *str)
 {
     int flg = 0;
-    char *pl = strrchr(str, '.');
-    if (pl == NULL) {
-        printf("pl %s\n", pl);
+    if (str == NULL)
         flg = 1;
+    else {
+        char *pl = strrchr(str, '.');
+        if (pl == NULL)
+            flg = 1;
+        else if ((long int)(pl[1]) == (long int)'/')
+            flg = 1;
     }
-    else if ((long int)(pl[1]) == (long int)'/')
-        flg = 1;
     return flg;
 }

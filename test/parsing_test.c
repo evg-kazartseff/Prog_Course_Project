@@ -94,3 +94,31 @@ CTEST(parsing, test_4)
     ASSERT_EQUAL(1, flg->print);
     free(t_file);
 }
+
+CTEST(check_path, correct_path)
+{
+    char *str = "./dictionary.txt";
+    int flg = check_path(str);
+    ASSERT_EQUAL(0, flg);
+}
+
+CTEST(check_path, str_null)
+{
+    char *str = NULL;
+    int flg = check_path(str);
+    ASSERT_EQUAL(1, flg);
+}
+
+CTEST(check_path, incorrect_path_1)
+{
+    char *str = "./dictionary";
+    int flg = check_path(str);
+    ASSERT_EQUAL(1, flg);
+}
+
+CTEST(check_path, incorrect_path_2)
+{
+    char *str = "dictionary";
+    int flg = check_path(str);
+    ASSERT_EQUAL(1, flg);
+}
